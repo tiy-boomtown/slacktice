@@ -26,5 +26,16 @@ When(/^I send "([^"]*)" to \#(\w+)$/) do |message, channel|
 end
 
 Then(/^I should see "([^"]*)" on the \#(\w+) page$/) do |message, channel|
-  pending
+  # Get channel id
+  data       = @api.post 'channels.list'
+  channels   = data['channels']
+  channel    = channels.select { |c| c['name'] == channel }.first
+  channel_id = channel['id']
+
+  data = @api.post 'channels.history', { channel: channel_id }
+
+  last_message = data['messages'].first
+  expect(last_message['text']).to eq message
+  # expect(last_message['bot_id']).to eq ...
+  expect(last_message['ts'].to_i).to be_within(3).of(Time.now.to_i)
 end
