@@ -15,21 +15,22 @@ When(/^I send "([^"]*)" to \#(\w+)$/) do |message, channel|
   }
   data = JSON.parse response.body
   unless data['ok']
-    raise 'channels.list failed'
+    raise "channels.list failed: #{data['error']}"
   end
   channels   = data['channels']
   channel    = channels.select { |c| c['name'] == channel }.first
   channel_id = channel['id']
 
-  puts "channel id is #{channel_id}"
-
   # Send message
-  Faraday.post 'https://slack.com/api/chat.postMessage', {
+  response = Faraday.post 'https://slack.com/api/chat.postMessage', {
     text:    message,
     channel: channel_id,
     token:   @token
   }
-  # NEED TO CHECK THAT THIS WAS A 200 / OK
+  data = JSON.parse response.body
+  unless data['ok']
+    raise "chat.postMessage failed: #{data['error']}"
+  end
 end
 
 Then(/^I should see "([^"]*)" on the \#(\w+) page$/) do |message, channel|
