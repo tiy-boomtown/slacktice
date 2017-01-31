@@ -15,6 +15,7 @@ GEM
       gherkin (~> 4.0)
     cucumber-wire (0.0.1)
     diff-lcs (1.3)
+    dotenv (2.1.0)
     faraday (0.11.0)
       multipart-post (>= 1.2, < 3)
     gherkin (4.0.0)
@@ -46,6 +47,7 @@ PLATFORMS
 
 DEPENDENCIES
   cucumber
+  dotenv
   faraday
   pry
   rspec
