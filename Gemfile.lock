@@ -2,6 +2,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     builder (3.2.3)
+    childprocess (0.6.1)
+      ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.1)
     cucumber (2.4.0)
       builder (>= 2.1.2)
@@ -18,6 +20,7 @@ GEM
     dotenv (2.1.0)
     faraday (0.11.0)
       multipart-post (>= 1.2, < 3)
+    ffi (1.9.17)
     gherkin (4.0.0)
     method_source (0.8.2)
     multi_json (1.12.1)
@@ -40,7 +43,13 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    rubyzip (1.2.0)
+    selenium-webdriver (3.0.5)
+      childprocess (~> 0.5)
+      rubyzip (~> 1.0)
+      websocket (~> 1.0)
     slop (3.6.0)
+    websocket (1.2.3)
 
 PLATFORMS
   ruby
@@ -51,6 +60,7 @@ DEPENDENCIES
   faraday
   pry
   rspec
+  selenium-webdriver
 
 BUNDLED WITH
    1.12.5
