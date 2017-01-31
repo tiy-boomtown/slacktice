@@ -1,6 +1,7 @@
 Given(/^I am (\w+)/) do |username|
+  @username = username
   puts "You are #{username}"
-  token = ENV["#{username.upcase}_TOKEN"]
+  token = ENV.fetch "#{username.upcase}_TOKEN"
   unless token # if !token
     raise 'Slack token not set'
   end
@@ -62,7 +63,7 @@ Then(/^I should see "([^"]*)" on the \#(\w+) page$/) do |message, channel|
   email.send_keys 'james+test@theironyard.com'
 
   password = Driver.find_element :name, 'password'
-  password.send_keys ENV['TESTBOT_PASSWORD']
+  password.send_keys ENV.fetch "#{@username.upcase}_PASSWORD"
 
   buttons = Driver.find_elements :css, 'button'
   # buttons.find { ... }
