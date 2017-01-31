@@ -7,6 +7,11 @@ Given(/^I am (\w+)/) do |username|
   @api = SlackAPI.new token
 end
 
+When(/^I send a message to \#(\w+)$/) do |channel|
+  @message = Faker::Company.catch_phrase
+  step "I send \"#{@message}\" to ##{channel}"
+end
+
 When(/^I send "([^"]*)" to \#(\w+)$/) do |message, channel|
   puts "Sending '#{message}' to ##{channel}"
 
@@ -23,6 +28,10 @@ When(/^I send "([^"]*)" to \#(\w+)$/) do |message, channel|
     text:    message,
     channel: channel_id
   }
+end
+
+Then(/^I should see that message on the \#(\w+) page$/) do |channel|
+  step "I should see \"#{@message}\" on the ##{channel} page"
 end
 
 Then(/^I should see "([^"]*)" on the \#(\w+) page$/) do |message, channel|
