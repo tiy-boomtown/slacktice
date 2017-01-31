@@ -40,6 +40,7 @@ Then(/^I should see "([^"]*)" on the \#(\w+) page$/) do |message, channel|
   # expect(last_message['ts'].to_i).to be_within(3).of(Time.now.to_i)
 
   Driver.get 'https://slack.com/signin'
+  wait = Selenium::WebDriver::Wait.new timeout: 15
 
   # Select team domain
   team_input = Driver.find_element :id, 'domain'
@@ -55,21 +56,36 @@ Then(/^I should see "([^"]*)" on the \#(\w+) page$/) do |message, channel|
   password.send_keys ENV['TESTBOT_PASSWORD']
 
   buttons = Driver.find_elements :css, 'button'
-  sign_in = buttons.select { |b| b.text == 'Sign in' }
+  # buttons.find { ... }
+  sign_in = buttons.select { |b| b.text == 'Sign in' }.first
+  # sign_in.visible?
   sign_in.click
 
   # On the home page
   headers = Driver.find_elements :css, 'button.channel_list_header_label'
-  headers.select { |b| b.text.start_with? 'CHANNELS' }.click
+  channel_link = wait.until do
+    el = headers.find { |b| b.text.start_with? 'CHANNELS' }
+    el if el && el.visible?
+  end
+  channel_link.click
 
   # Filter down to see the channel
   Driver.find_element(:id, 'channel_browser_filter').send_keys channel
-  link = Driver.find_elements(:css, '.channel_link').first
-  link.click
+
+  # the link we need to click on doesn't appear until we mouse over the position
+  link = driver.find_element(:css, '.channel_link')
+  Driver.mouse.move_to link
+  overlay = driver.find_element :css, '#channel_browser'
+  overlay.click
 
   # Look for the last message
   messages = Driver.find_elements(:css, '.message')
   last_message = messages.last
 
+  binding.pry
+
   expect(last_message.text).to include message
+
+  # TODO: instead of grabbing the last message
+  #   look for a message by this user, with the right text, posted "recently"
 end
