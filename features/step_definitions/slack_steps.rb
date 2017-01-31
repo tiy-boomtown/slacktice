@@ -65,7 +65,7 @@ Then(/^I should see "([^"]*)" on the \#(\w+) page$/) do |message, channel|
   headers = Driver.find_elements :css, 'button.channel_list_header_label'
   channel_link = wait.until do
     el = headers.find { |b| b.text.start_with? 'CHANNELS' }
-    el if el && el.visible?
+    el if el && el.displayed?
   end
   channel_link.click
 
@@ -73,16 +73,14 @@ Then(/^I should see "([^"]*)" on the \#(\w+) page$/) do |message, channel|
   Driver.find_element(:id, 'channel_browser_filter').send_keys channel
 
   # the link we need to click on doesn't appear until we mouse over the position
-  link = driver.find_element(:css, '.channel_link')
+  link = Driver.find_element(:css, '.channel_link')
   Driver.mouse.move_to link
-  overlay = driver.find_element :css, '#channel_browser'
+  overlay = Driver.find_element :css, '#channel_browser'
   overlay.click
 
   # Look for the last message
   messages = Driver.find_elements(:css, '.message')
   last_message = messages.last
-
-  binding.pry
 
   expect(last_message.text).to include message
 
