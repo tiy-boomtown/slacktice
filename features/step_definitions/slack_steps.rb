@@ -29,6 +29,7 @@ When(/^I send "([^"]*)" to \#(\w+)$/) do |message, channel|
     channel: channel_id,
     token:   @token
   }
+  # NEED TO CHECK THAT THIS WAS A 200 / OK
 end
 
 Then(/^I should see "([^"]*)" on the \#(\w+) page$/) do |message, channel|
