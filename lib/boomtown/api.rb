@@ -29,5 +29,11 @@ module Boomtown
       data = send(:get, '/leads/anonymous')
       data['Result']['_ID']
     end
+
+    def get_details(property_id)
+      # http://flagshipapi.qa6.local/lc/1/listings/1403452?action=ajax_submit&access_token=...&VisitorID=...&VisitID=...&LogSearch=true
+      data = send(:get, "/lc/1/listings/#{property_id}")
+      data['Result']
+    end
   end
 end
