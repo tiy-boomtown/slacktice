@@ -34,6 +34,7 @@ And(/^each result mentions (.*)$/) do |phrase|
     id     = href.split('/').last
     result = @api.get_property_details id
 
+    puts id
     expect(result['PublicRemarks'].downcase).to include phrase.downcase
   end
 end
