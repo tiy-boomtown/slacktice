@@ -104,3 +104,8 @@ And(/^I have a user account$/) do
   phone = @web.find '.at-phone-txt'
   expect(phone.attribute :value).to eq @my_phone
 end
+
+And(/^My agent is located in (\w+)$/) do |city|
+  match = /"AgentID":(\d+)/.match(@web.driver.page_source)
+  agent_id = match[1].to_i
+end
