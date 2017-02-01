@@ -29,8 +29,12 @@ And(/^each result is in (.*)$/) do |location|
   pending
 end
 
-And(/^I click "([^"]*)"$/) do |arg|
-  pending
+And(/^I click "Save Search"$/) do
+  button = @web.wait_for('a.js-save-search')
+  button.click
+
+  modal = @web.wait_for('.js-sign-in-modal-switcher')
+  expect(modal.text).to include 'Free Account Activation'
 end
 
 And(/^I complete registration$/) do
