@@ -1,7 +1,5 @@
 module Boomtown
   class Api
-    attr_reader :conn
-
     def initialize(username, password)
       @url   = 'http://flagshipapi.qa6.local/'
       @token = get_token(username, password)

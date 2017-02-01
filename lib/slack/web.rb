@@ -52,7 +52,7 @@ module Slack
     def visit_channel(name)
       channels = driver.find_element css: '#channel-list'
       links    = channels.find_elements css: 'a'
-      links.find { |l| l.text == 'test' }.click
+      links.find { |l| l.text == name }.click
     end
 
     # Allow us to use the SlackWeb object in place of the driver that it wraps

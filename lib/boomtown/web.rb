@@ -38,7 +38,7 @@ module Boomtown
     # Domain-level helpers
 
     def search_for(term)
-      visit "/"
+      visit '/'
       search = wait_for '#query'
       search.send_keys term
 
