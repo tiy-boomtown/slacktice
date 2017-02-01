@@ -82,8 +82,10 @@ And(/^I save the search as "([^"]*)"$/) do |name|
   form.find_element(:css, '.at-submit-btn').click
 end
 
-Then(/^I see "([^"]*)" in my saved searches$/) do |arg|
-  pending
+Then(/^I see "([^"]*)" in my saved searches$/) do |name|
+  @web.visit '/notifications'
+  first_link = @web.find '#searches a'
+  expect(first_link.text).to eq name
 end
 
 And(/^I have a user account$/) do
