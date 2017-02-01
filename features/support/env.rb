@@ -6,8 +6,5 @@ require 'faker'
 require 'dotenv'
 Dotenv.load
 
-require_relative '../../slack_api'
-
-Driver = Selenium::WebDriver.for :chrome
-
-at_exit { Driver.quit }
+require_relative '../../lib/slack/api'
+require_relative '../../lib/slack/web'
