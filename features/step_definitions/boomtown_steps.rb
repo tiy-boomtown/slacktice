@@ -89,5 +89,8 @@ Then(/^I see "([^"]*)" in my saved searches$/) do |name|
 end
 
 And(/^I have a user account$/) do
-  pending
+  @web.visit '/account'
+
+  phone = @web.find '.at-phone-text'
+  expect(phone.text).to eq @my_phone
 end
