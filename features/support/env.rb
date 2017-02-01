@@ -16,8 +16,9 @@ require_relative '../../lib/boomtown/web'
 #   ENV.fetch('BOOMTOWN_USERNAME'),
 #   ENV.fetch('BOOMTOWN_PASSWORD')
 # )
-# a.get_lead_id
-
+# result = a.get_property_details
+#
+# puts
 # b = Boomtown::Web.new
 # b.search_for 'King Street'
 # b.find('.results-paging').text # 187

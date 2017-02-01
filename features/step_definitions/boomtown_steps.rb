@@ -1,4 +1,8 @@
 Given(/^I'm on the home page$/) do
+  @api = Boomtown::Api.new(
+    ENV.fetch('BOOMTOWN_USERNAME'),
+    ENV.fetch('BOOMTOWN_PASSWORD')
+  )
   @web = Boomtown::Web.new
   @web.visit '/'
 end
@@ -21,12 +25,17 @@ And(/^there are at least (\d+) results$/) do |count|
   expect(results.text.to_i).to be > count.to_i
 end
 
-And(/^each result is in (.*)$/) do |location|
+And(/^each result mentions (.*)$/) do |phrase|
   links = @web.find_all 'a.at-related-props-card'
   # a .at-related-props-card - things with class inside a tags
   # a.at-related-props-card - a tags with class ...
-  locations = links.map { |l| l.attribute :href }
-  pending
+  links.each do |link|
+    href   = link.attribute(:href)
+    id     = href.split('/').last
+    result = @api.get_property_details id
+
+    expect(result['PublicRemarks'].downcase).to include phrase.downcase
+  end
 end
 
 And(/^I click "Save Search"$/) do
