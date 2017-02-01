@@ -28,3 +28,23 @@ And(/^each result is in (.*)$/) do |location|
   locations = links.map { |l| l.attribute :href }
   pending
 end
+
+And(/^I click "([^"]*)"$/) do |arg|
+  pending
+end
+
+And(/^I complete registration$/) do
+  pending
+end
+
+And(/^I save the search as "([^"]*)"$/) do |arg|
+  pending
+end
+
+Then(/^I see "([^"]*)" in my saved searches$/) do |arg|
+  pending
+end
+
+And(/^I have a user account$/) do
+  pending
+end
