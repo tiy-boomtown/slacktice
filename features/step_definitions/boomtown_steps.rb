@@ -75,7 +75,11 @@ And(/^I fill in name and phone number/) do
 end
 
 And(/^I save the search as "([^"]*)"$/) do |name|
-  pending
+  form = @web.wait_for '#save-search-form'
+  i = form.find_element(:name, 'searchName')
+  i.send_keys name
+
+  form.find_element(:css, '.at-submit-btn').click
 end
 
 Then(/^I see "([^"]*)" in my saved searches$/) do |arg|
