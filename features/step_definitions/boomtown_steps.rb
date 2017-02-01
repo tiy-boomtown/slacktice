@@ -38,7 +38,22 @@ And(/^I click "Save Search"$/) do
 end
 
 And(/^I complete registration$/) do
-  pending
+  step "I fill in email"
+  step "I fill in name and phone number"
+end
+
+And(/^I fill in email$/) do
+  @my_email = Faker::Internet.email
+
+  form = @web.find '.js-register-form'
+  i = form.find_element(:name, 'email')
+  i.send_keys @my_email
+
+  form.find_element(:css, '.bt-squeeze__button').click
+end
+
+And(/^I fill in name and phone number/) do
+  puts 'here'
 end
 
 And(/^I save the search as "([^"]*)"$/) do |arg|
