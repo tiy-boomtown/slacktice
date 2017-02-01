@@ -10,7 +10,7 @@ module Boomtown
       #   '--disable-popup-blocking'
       # ]
       @driver.manage.window.resize_to(1600, 1200)
-      @wait = Selenium::WebDriver::Wait.new timeout: 15
+      @wait = Selenium::WebDriver::Wait.new timeout: 30
 
       at_exit { @driver.quit }
     end
@@ -31,7 +31,8 @@ module Boomtown
 
     def wait_for(selector)
       wait.until do
-        find selector
+        found = find selector
+        found if found && found.displayed?
       end
     end
 
