@@ -91,6 +91,6 @@ end
 And(/^I have a user account$/) do
   @web.visit '/account'
 
-  phone = @web.find '.at-phone-text'
+  phone = @web.find '.at-phone-txt'
   expect(phone.text).to eq @my_phone
 end
