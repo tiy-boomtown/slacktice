@@ -141,6 +141,17 @@ When(/^I look at an expensive property$/) do
   @web.visit prop.url
 end
 
-Then(/^I should see at least (\d+) related properties$/) do |arg|
-  pending
+Then(/^I should see at least (\d+) related properties$/) do |n|
+  related = @web.wait_for '.bt-related-properties'
+
+  @web.wait_for 'article.bt-listing-teaser'
+  props = related.find_elements(css: 'article.bt-listing-teaser')
+
+  # props = @web.wait.until do
+  #   found = related.find_elements(css: 'article.bt-listing-teaser')
+  #   found if found.count > 0
+  # end
+
+  visible_props = props.select { |prop| prop.displayed? }
+  expect(visible_props.count).to be >= n.to_i
 end
