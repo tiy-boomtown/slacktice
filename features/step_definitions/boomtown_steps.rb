@@ -122,28 +122,15 @@ And(/^my agent is located in Charleston$/) do
 end
 
 And(/^I click on the first property$/) do
-  @cards = @web.find_all '#listings_view_gallery .js-card'
-  first = @cards.first
-  el = first.attribute('data-url')
-  @web.driver.get el
-
+@web.view_property(1)
 end
 
 And(/^I go back$/) do
-  backs = @web.find_all '.js-back-to-search'
-  backs.each do |m|
-    if m.displayed?
-      m.click
-      break
-    end
-  end
+@web.back_to_search
 end
 
 And(/^I click on the second property$/) do
-  @cards = @web.find_all '#listings_view_gallery .js-card'
-  second = @cards[1]
-  el = second.attribute('data-url')
-  @web.driver.get el
+@web.view_property(2)
 end
 
 Then(/^I see a registration form$/) do

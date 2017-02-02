@@ -46,5 +46,22 @@ module Boomtown
       btn = find '.bt-home-search__button'
       btn.click
     end
+
+    def view_property (arg)
+      @cards = find_all '#listings_view_gallery .js-card'
+      val = arg-1
+      prop = @cards[val]
+      el = prop.attribute('data-url')
+      driver.get el
+    end
+    def back_to_search
+      backs = find_all '.js-back-to-search'
+      backs.each do |m|
+        if m.displayed?
+          m.click
+          break
+        end
+      end
+    end
   end
 end
