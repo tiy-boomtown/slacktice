@@ -1,5 +1,6 @@
 require 'rspec'
 require_relative '../lib/boomtown/api'
+require_relative '../lib/boomtown/property_listing'
 
 require 'faraday'
 require 'json'
