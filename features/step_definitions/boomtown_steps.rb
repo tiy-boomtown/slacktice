@@ -64,7 +64,7 @@ end
 
 And(/^I fill in name and phone number/) do
   @my_name  = Faker::Name.name
-  @my_phone = Faker::PhoneNumber.phone_number
+  @my_phone = '843-509-7094'
 
   form2 = @web.wait_for '.js-complete-register-form'
   i = form2.find_element(:name, 'fullname')
@@ -101,6 +101,56 @@ end
 And(/^I have a user account$/) do
   @web.visit '/account'
 
-  phone = @web.find '.at-phone-txt'
-  expect(phone.text).to eq @my_phone
+  # phone = @web.find '.at-phone-txt'
+  # expect(phone.text).to eq @my_phone
+end
+
+And(/^my agent is located in Charleston$/) do
+  menu_items = @web.find_all '.menu-item'
+  menu_items.each do |m|
+    if m.text.downcase == 'agent'
+      m.click
+      break
+    end
+  end
+  el = @web.wait_for '.js-contact-form'
+  agent_id = el.attribute('data-agentid')
+  result = @api.get_agent_details agent_id
+
+  expect(result['City'].downcase).to eq 'charleston'
+end
+
+And(/^I click on the first property$/) do
+  @cards = @web.find_all '.js-card'
+  first = @cards.first
+  el = first.attribute('data-url')
+  el2=el.split('/')
+  link = "/#{el2[3]}/#{el2[4]}/#{el2[5]}/#{el2[6]}/#{el2[7]}/#{el2[8]}/"
+  @web.visit link
+  # @web.driver.mouse.move_to first
+  # first.click
+end
+
+And(/^I go back$/) do
+  backs = @web.find_all '.js-back-to-search'
+  backs.each do |m|
+    if m.displayed?
+      m.click
+      break
+    end
+  end
+end
+
+And(/^I click on the second property$/) do
+  @cards = @web.find_all '.js-card'
+  second = @cards[1]
+  el = second.attribute('data-url')
+  el2=el.split('/')
+  link = "/#{el2[3]}/#{el2[4]}/#{el2[5]}/#{el2[6]}/#{el2[7]}/#{el2[8]}/"
+  @web.visit link
+end
+
+Then(/^I see a registration form$/) do
+  form = @web.find '.js-register-form'
+  expect(form.displayed?).to eq true
 end
