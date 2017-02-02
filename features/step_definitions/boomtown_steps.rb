@@ -109,3 +109,28 @@ And(/^My agent is located in (\w+)$/) do |city|
   match = /"AgentID":(\d+)/.match(@web.driver.page_source)
   agent_id = match[1].to_i
 end
+
+# And(/^I click on the (first|second) property$/) do |ord|
+And(/^I click on the (\d+)(st|nd|rd|th) property$/) do |n,_|
+  results = @web.wait_for '.js-load-results'
+  buttons = results.find_elements css: '.bt-listing-teaser__view-details'
+  buttons[n.to_i - 1].click
+end
+
+And(/^I go back to search$/) do
+  btn = @web.wait.until do
+    btns = @web.find_all '.js-back-to-search'
+    btns.find { |b| b.displayed? }
+  end
+  btn.click
+end
+
+
+Then(/^I see a registration form$/) do
+  modal = @web.wait_for '.bt-modal__top'
+  expect(modal.text).to include 'Want to Compare Homes?'
+  expect(modal.text).to include 'Continue With Email'
+
+  # form = modal.find_element css: 'form'
+  # expect(form.attribute :action).to eq '...'
+end

@@ -10,7 +10,7 @@ module Boomtown
       #   '--disable-popup-blocking'
       # ]
       @driver.manage.window.resize_to(1600, 1200)
-      @wait = Selenium::WebDriver::Wait.new timeout: 45
+      @wait = Selenium::WebDriver::Wait.new timeout: 15
 
       at_exit { @driver.quit }
     end

@@ -20,7 +20,7 @@ Feature: search
 
    Scenario: searching user gets squeezed
      When I search for "Charleston"
-      And I click on the first property
-      And I go back
-      And I click on the second property
+      And I click on the 1st property
+      And I go back to search
+      And I click on the 2nd property
      Then I see a registration form
