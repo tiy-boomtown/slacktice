@@ -124,11 +124,7 @@ And(/^I click on the first property$/) do
   @cards = @web.find_all '.js-card'
   first = @cards.first
   el = first.attribute('data-url')
-  el2=el.split('/')
-  link = "/#{el2[3]}/#{el2[4]}/#{el2[5]}/#{el2[6]}/#{el2[7]}/#{el2[8]}/"
-  @web.visit link
-  # @web.driver.mouse.move_to first
-  # first.click
+  @web.driver.get el
 end
 
 And(/^I go back$/) do
@@ -145,9 +141,7 @@ And(/^I click on the second property$/) do
   @cards = @web.find_all '.js-card'
   second = @cards[1]
   el = second.attribute('data-url')
-  el2=el.split('/')
-  link = "/#{el2[3]}/#{el2[4]}/#{el2[5]}/#{el2[6]}/#{el2[7]}/#{el2[8]}/"
-  @web.visit link
+  @web.driver.get el
 end
 
 Then(/^I see a registration form$/) do
