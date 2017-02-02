@@ -1,11 +1,9 @@
 module Boomtown
   class PropertyListing
+    attr_reader :price
+
     def initialize(data)
       @price = data.fetch 'ListPrice'
-    end
-
-    def price
-      @price
     end
   end
 
@@ -60,7 +58,14 @@ module Boomtown
     end
 
     def search(criteria)
-      data = send(:get, '/lc/1/listings/search')
+      parameters = {}
+      if criteria[:min_price]
+        parameters[:minprice] = criteria[:min_price]
+      end
+      if criteria[:max_price]
+        parameters[:maxprice] = criteria[:max_price]
+      end
+      data = send(:get, '/lc/1/listings/search', parameters)
       results = data['Result']['Items']
 
       results.map { |hash| PropertyListing.new hash }
