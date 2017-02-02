@@ -58,13 +58,20 @@ module Boomtown
     end
 
     def search(criteria)
+      translations = {
+        :min_price => :minprice,
+        :max_price => :maxprice,
+        :sort_by   => :sort,
+        :type      => :status
+      }
+
       parameters = {}
-      if criteria[:min_price]
-        parameters[:minprice] = criteria[:min_price]
+      translations.each do |crit_name, param_name|
+        if criteria[crit_name]
+          parameters[param_name] = criteria[crit_name]
+        end
       end
-      if criteria[:max_price]
-        parameters[:maxprice] = criteria[:max_price]
-      end
+
       data = send(:get, '/lc/1/listings/search', parameters)
       results = data['Result']['Items']
 
