@@ -134,3 +134,13 @@ Then(/^I see a registration form$/) do
   # form = modal.find_element css: 'form'
   # expect(form.attribute :action).to eq '...'
 end
+
+# Expensive ~> > 1_000_000
+When(/^I look at an expensive property$/) do
+  prop = @api.search(min_price: 1_000_000).first
+  @web.visit prop.url
+end
+
+Then(/^I should see at least (\d+) related properties$/) do |arg|
+  pending
+end

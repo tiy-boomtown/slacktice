@@ -1,5 +1,14 @@
 module Boomtown
   class Api
+
+    def self.from_env
+      # Boomtown::Api.new(
+      new(
+         ENV.fetch('BOOMTOWN_USERNAME'),
+         ENV.fetch('BOOMTOWN_PASSWORD')
+      )
+    end
+
     def initialize(username, password)
       @url   = 'http://flagshipapi.qa6.local/'
       @token = get_token(username, password)
@@ -38,6 +47,10 @@ module Boomtown
       # &LogSearch=true
       data = send(:get, "/lc/1/listings/#{prop_id}") # {'LogSearch' => 'true'}
       data['Result']
+    end
+
+    def search(criteria)
+      []
     end
   end
 end
