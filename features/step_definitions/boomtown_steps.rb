@@ -125,6 +125,7 @@ And(/^I click on the first property$/) do
   first = @cards.first
   el = first.attribute('data-url')
   @web.driver.get el
+
 end
 
 And(/^I go back$/) do
