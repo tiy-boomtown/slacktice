@@ -1,4 +1,14 @@
 module Boomtown
+  class PropertyListing
+    def initialize(data)
+      @price = data.fetch 'ListPrice'
+    end
+
+    def price
+      @price
+    end
+  end
+
   class Api
 
     def self.from_env
@@ -50,7 +60,10 @@ module Boomtown
     end
 
     def search(criteria)
-      []
+      data = send(:get, '/lc/1/listings/search')
+      results = data['Result']['Items']
+
+      results.map { |hash| PropertyListing.new hash }
     end
   end
 end
