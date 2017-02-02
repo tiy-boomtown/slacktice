@@ -19,7 +19,7 @@ Feature: search
        And my agent is located in Charleston
 
    Scenario: searching user gets squeezed
-     When I search for "Charleston"
+     When I search for "Daniel Island"
       And I click on the first property
       And I go back
       And I click on the second property

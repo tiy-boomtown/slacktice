@@ -9,6 +9,7 @@ end
 
 When(/^I search for "([^"]*)"$/) do |q|
   @web.search_for q
+  @web.wait_for '.js-load-results'
 end
 
 Then(/^"([^"]*)" appears in the filter list$/) do |term|
@@ -121,7 +122,7 @@ And(/^my agent is located in Charleston$/) do
 end
 
 And(/^I click on the first property$/) do
-  @cards = @web.find_all '.js-card'
+  @cards = @web.find_all '#listings_view_gallery .js-card'
   first = @cards.first
   el = first.attribute('data-url')
   @web.driver.get el
@@ -139,7 +140,7 @@ And(/^I go back$/) do
 end
 
 And(/^I click on the second property$/) do
-  @cards = @web.find_all '.js-card'
+  @cards = @web.find_all '#listings_view_gallery .js-card'
   second = @cards[1]
   el = second.attribute('data-url')
   @web.driver.get el
